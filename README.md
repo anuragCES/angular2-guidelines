@@ -36,7 +36,7 @@ _As applications grow in size and functionality, it often feels like the ensuing
 - Reduces the "book-keeping" burden (both mental and technical kinds) of having to track mutations and their sources. 
 
 
-```
+```js
 // avoid
 function addToFavourites(favouritesList, newFavouriteUser) {
   // mutate the old favourites list to add a new favourite
@@ -72,7 +72,7 @@ function addFollower(user, follower) {
 - Simplifies understanding program operations and execution along with programmer intent.
 - Maximizes reuse of code through granularity of abstractions.
 
-```
+```js
 // avoid
 const newMember = new User();
 newMember.setName(fullName);
@@ -133,7 +133,7 @@ function invite(team, { name, email }) {
 - Removes reliance on environment-specific globals.
 - Allows for easier testing of functions with side-effects.
 
-```
+```js
 // avoid
 function saveUser(user) {
   localStorage.set('user', user);
@@ -198,7 +198,7 @@ function getRecords(http) {
 
 ### 2.2 Use upper CamelCase for classes (i.e. components, services and pipes definitions)
 
-```
+```js
 // avoid
 class button {}
 
@@ -209,7 +209,7 @@ class Button {}
 
 ### 2.3 Use lower camelCase for variables, function names, class instances, directive selectors, property bindings, event bindings, template variables and template element attributes
 
-```
+```js
 // avoid
 const UserList = [ ... ]
 function CalculateTax(...) {}
@@ -235,7 +235,7 @@ function calculateTax(...) {}
 
 - Allows browsers to interpret them as custom elements
 
-```
+```js
 // avoid
 @Component({
   selector: 'mdButton',
@@ -371,7 +371,7 @@ src
 
 - Prevents name collisions in the templates.
 
-```
+```js
 // avoid
 @Component({
   selector: 'button',

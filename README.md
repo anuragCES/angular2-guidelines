@@ -162,8 +162,8 @@ function getRecords(http) {
 
 ### 1.4 Prefer Redux for state management
 
-- **Use** the actual [Redux](https://github.com/reactjs/redux) library and/or framework-specific wrappers like [ng-redux](https://github.com/wbuchwalter/ng-redux).
-- Allows for predictable state management. 
+- **Use** the actual [Redux](https://github.com/reactjs/redux) library and/or framework-specific wrappers like [ng2-redux](https://github.com/wbuchwalter/ng2-redux).
+- Allows for predictable state management.
 
 ## 2 Naming conventions
 

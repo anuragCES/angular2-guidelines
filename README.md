@@ -17,7 +17,7 @@ This style guide is a living document <sup>[1](#footnote1)</sup>. We welcome new
 5. Components
 6. Templates
 7. Services
-8. Directives 
+8. Directives
 9. Dependency Injection (DI)
 10. Routing
 11. Testing
@@ -33,7 +33,7 @@ _As applications grow in size and functionality, it often feels like the ensuing
 
 - **Use** `const` bindings when declaring references.
 - **Use** [Immutable](https://facebook.github.io/immutable-js/)'s efficient persistent data structures.
-- Reduces the "book-keeping" burden (both mental and technical kinds) of having to track mutations and their sources. 
+- Reduces the "book-keeping" burden (both mental and technical kinds) of having to track mutations and their sources.
 
 
 ```js
@@ -45,24 +45,24 @@ function addToFavourites(favouritesList, newFavouriteUser) {
 
 function addFollower(user, follower) {
   let ret;
-  
+
   ret = user.update('followers', (oldList) => oldList.push(follower));
   ret = user.set('hasNewFollower', true);
-  
+
   return ret;
 }
 
 
 // good
 function addToFavourites(favouritesList, newFavouriteUser) {
-  // return a new favourites list with the new favourite appended 
+  // return a new favourites list with the new favourite appended
   return favouritesList.concat([newFavouriteUser]);
 }
 
 function addFollower(user, follower) {  
   const updatedUser = user.update('followers', (oldList) => oldList.push(follower));
   const updatedUserWithFlag = user.set('hasNewFollower', true);
-  
+
   return updatedUserWithFlag;
 }
 ```
@@ -85,16 +85,16 @@ newTeam.invite(newMember);
 // avoid
 function invite(team, { fullName, email }) {
   const names = fullName.split(' ');
-  
+
   const newMember = {
     no: team.length
     firstName: names[0],
     lastName: names[1],
     joinedOn: new Date(),
   };
-  
+
   const newTeam = team.concat([newMember]);
-  
+
   return newTeam;
 }
 
@@ -102,7 +102,7 @@ function invite(team, { fullName, email }) {
 // good
 function createUser(fullName, email) {
   const names = fullName.split(' ');
-  
+
   return {
     firstName: names[0],
     lastName: names[1],
@@ -116,14 +116,14 @@ function addToTeam(team, candidate) {
     { no: team.length },
     candidate
   );
-  
+
   return team.concat([newMember]);
 }
 
 function invite(team, { name, email }) {
   const newUser = createUser(name, email);
   const newTeam = addToTeam(team, newUser);
-  
+
   return newTeam;
 }
 ```
@@ -337,7 +337,7 @@ src
 
 - **components:** contains state-less view components that take data "from above" and present a UI.
 
-- **containers:** contains stateful, and often routable, components that pass down data and behaviour-encapsulating callbacks to presentational components (and sometimes other containers). 
+- **containers:** contains stateful, and often routable, components that pass down data and behaviour-encapsulating callbacks to presentational components (and sometimes other containers).
 
 - **constants:** contains Redux constants which are typically action types.
 
@@ -394,7 +394,37 @@ class Button {}
 - **Use** `templateUrl` when depending on external template files.
 - Eases management of template when using markup over strings.
 
-### 5.4 Use `@Input` and `@Output` decorators
+### 5.4 Prefer `@Input` and `@Output` decorators over their `@Component` properties.
+
+When declaring component inputs and outputs, prefer the decorator version.
+
+```typescript
+// Avoid
+@Component({
+  // ...
+  inputs: [ foo, bar ],
+  outputs: [ quux]
+})
+class MyComponent {
+  foo: number;
+  bar: string;
+  quux: EventEmitter<string>;
+}
+
+// Prefer:
+@Component({
+  // ...
+})
+class MyComponent {
+  @Input() foo: number;
+  @Input() bar: string;
+  @Output() quux: EventEmitter<string>;
+}
+```
+
+* It's DRY-er: you no longer have to declare the 'input-ness' and the member variable in two different places.
+* It associates the type with the input in one easily-readable location
+(preferably at the top of your component class).
 
 ## 6. Templates
 
@@ -439,7 +469,7 @@ class Button {}
 
 ## 12. Packaging
 
-- As libraries in the `/utils` folder mature, it is recommended that you bundle and version them as external npm packages. In the ideal case, your business logic is brought into your application as a collection of independent npm packages and your application only uses Angular and Redux to render it's UI. 
+- As libraries in the `/utils` folder mature, it is recommended that you bundle and version them as external npm packages. In the ideal case, your business logic is brought into your application as a collection of independent npm packages and your application only uses Angular and Redux to render it's UI.
 
 ## 13. Notes About Typescript
 
